@@ -2,7 +2,11 @@ import type { Metadata } from "next";
 import { JetBrains_Mono, Syne, Outfit } from "next/font/google";
 import "./globals.css";
 import { CustomCursor } from "@/components/ui/CustomCursor";
+import { SplashScreen } from "@/components/ui/SplashScreen";
+import { ShortcutToast } from "@/components/ui/ShortcutToast";
 import { ThemeProvider } from "@/context/ThemeContext";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -55,9 +59,13 @@ export default function RootLayout({
     <html lang="en" className={`${jetbrainsMono.variable} ${syne.variable} ${outfit.variable}`}>
       <body className="font-sans bg-vscode-bg text-vscode-text-primary antialiased">
         <ThemeProvider>
+          <SplashScreen />
           <CustomCursor />
           {children}
+          <ShortcutToast />
         </ThemeProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

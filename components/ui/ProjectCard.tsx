@@ -1,11 +1,19 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import { Project } from "@/data/portfolio";
+
+const CLAMP_LINES = 3;
+const APPROX_CHARS_PER_LINE = 72; // rough threshold for "long" description
 
 interface ProjectCardProps {
   project: Project;
 }
 
 export function ProjectCard({ project }: ProjectCardProps) {
+  const isLong = project.description.length > APPROX_CHARS_PER_LINE * CLAMP_LINES;
+  const [expanded, setExpanded] = useState(false);
+
   return (
     <div
       className="relative bg-white/[0.02] border border-vscode-border rounded p-5 overflow-hidden
@@ -66,9 +74,28 @@ export function ProjectCard({ project }: ProjectCardProps) {
       </div>
 
       {/* Description */}
-      <p className="text-xs text-vscode-text-muted leading-[1.75] mb-4 flex-1">
-        {project.description}
-      </p>
+      <div className="mb-3 flex-1">
+        <p
+          className="text-xs text-vscode-text-muted leading-[1.75] transition-all duration-300"
+          style={!expanded && isLong ? {
+            display: "-webkit-box",
+            WebkitLineClamp: CLAMP_LINES,
+            WebkitBoxOrient: "vertical",
+            overflow: "hidden",
+          } : undefined}
+        >
+          {project.description}
+        </p>
+        {isLong && (
+          <button
+            onClick={() => setExpanded((v) => !v)}
+            className="mt-1.5 text-[11px] font-mono transition-colors"
+            style={{ color: project.accentColor }}
+          >
+            {expanded ? "Show less ↑" : "Read more ↓"}
+          </button>
+        )}
+      </div>
 
       {/* Tags */}
       <div className="flex flex-wrap gap-1.5">

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useRef } from "react";
 import { PortfolioProvider, usePortfolio } from "@/context/PortfolioContext";
 import { useCommandPalette } from "@/hooks/useCommandPalette";
 import { FileCode2 } from "lucide-react";
@@ -12,6 +12,7 @@ import { Breadcrumb } from "@/components/chrome/Breadcrumb";
 import { StatusBar } from "@/components/chrome/StatusBar";
 import { CommandPalette } from "@/components/chrome/CommandPalette";
 import { CopilotPanel } from "@/components/chrome/CopilotPanel";
+import { ActiveLineHighlight } from "@/components/ui/ActiveLineHighlight";
 
 import { Terminal } from "@/components/chrome/Terminal";
 import { HomeSection } from "@/components/sections/HomeSection";
@@ -62,6 +63,8 @@ function PortfolioApp() {
     terminalOpen, toggleTerminal,
   } = usePortfolio();
 
+  const editorRef = useRef<HTMLDivElement>(null);
+
   const { isOpen, open, close, query, setQuery, selectedIndex, setSelectedIndex } =
     useCommandPalette(openCopilot);
 
@@ -88,7 +91,8 @@ function PortfolioApp() {
       <TitleBar onOpenPalette={open} onToggleSidebar={toggleSidebar} onOpenCopilot={openCopilot} />
 
       {/* Editor area */}
-      <div className="flex flex-1 overflow-hidden min-h-0">
+      <div className="flex flex-1 overflow-hidden min-h-0 relative">
+
         {/* Sidebar */}
         <Sidebar onOpenCopilot={openCopilot} copilotOpen={copilotOpen} />
 
@@ -99,13 +103,15 @@ function PortfolioApp() {
 
           {hasOpenTabs ? (
             /*
-             * key={activeFileId} resets the scroll position to the top
+             * key={activeFileId} triggers animate-tab-enter + resets scroll
              * every time the user switches to a different file tab.
              */
             <div
+              ref={editorRef}
               key={activeFileId}
-              className="flex-1 overflow-y-auto thin-scrollbar pb-6 min-h-0"
+              className="flex-1 overflow-y-auto thin-scrollbar pb-6 min-h-0 animate-tab-enter relative"
             >
+              <ActiveLineHighlight containerRef={editorRef} />
               <ActiveSection fileId={activeFileId} />
             </div>
           ) : (
