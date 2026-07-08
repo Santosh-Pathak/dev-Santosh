@@ -92,7 +92,7 @@ export function HomeSection() {
           className="font-display font-extrabold leading-none text-vscode-bright tracking-[-2.5px]"
           style={{ fontSize: "clamp(34px, 5.5vw, 68px)" }}
         >
-          {hero.firstName}
+          <span className="shiver-on-hover">{hero.firstName}</span>
           <br />
           <em className="not-italic text-vscode-pink relative">
             {hero.lastName}

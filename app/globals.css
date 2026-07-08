@@ -315,6 +315,27 @@ section {
 .toast-in  { animation: toast-in  0.25s ease-out forwards; }
 .toast-out { animation: toast-out 0.25s ease-in  forwards; }
 
+/* ── Name shiver on hover ───────────────────────────────── */
+@keyframes shiver {
+  0%   { transform: translateX(0)      rotate(0deg);   }
+  10%  { transform: translateX(-2.5px) rotate(-0.4deg);}
+  20%  { transform: translateX(2.5px)  rotate( 0.4deg);}
+  30%  { transform: translateX(-2px)   rotate(-0.3deg);}
+  40%  { transform: translateX(2px)    rotate( 0.3deg);}
+  50%  { transform: translateX(-1.5px) rotate(-0.2deg);}
+  60%  { transform: translateX(1.5px)  rotate( 0.2deg);}
+  70%  { transform: translateX(-2px)   rotate(-0.3deg);}
+  80%  { transform: translateX(2px)    rotate( 0.3deg);}
+  90%  { transform: translateX(-1px)   rotate(-0.1deg);}
+  100% { transform: translateX(0)      rotate(0deg);   }
+}
+.shiver-on-hover:hover {
+  animation: shiver 0.015s linear infinite;
+  display: inline-block;
+  color: var(--color-pink);
+  transition: color 0.15s ease;
+}
+
 /* Typewriter blinking cursor */
 @keyframes blink-cursor {
   0%, 49% { opacity: 1; }
