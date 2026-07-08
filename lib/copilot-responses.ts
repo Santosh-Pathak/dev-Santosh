@@ -36,6 +36,12 @@ export const copilotChips: CopilotChip[] = [
       "You can reach Santosh through several channels:\n\n📧 **Email:** pathaksantosh987@gmail.com\n💼 **LinkedIn:** linkedin.com/in/santosh-pathak-dev\n🐙 **GitHub:** github.com/Santosh-Pathak\n🌐 **Portfolio:** santosh-pathak-portfolio.vercel.app\n✍️ **Medium:** medium.com/@pathaksantosh987\n\nOr use the **Contact section** of this portfolio to send him a message directly!",
   },
   {
+    id: "blogs",
+    label: "Does Santosh write blogs?",
+    response:
+      "Yes! Santosh writes on Medium at **medium.com/@pathaksantosh987** ✍️\n\nHis posts cover full-stack engineering, cloud/DevOps, system design, and LeetCode insights. You can read them live in the **Blogs** tab of this portfolio — posts are pulled directly from his Medium feed with cover images.\n\nClick any post card to open the full article on Medium.",
+  },
+  {
     id: "support",
     label: "How can I support Santosh?",
     response:
