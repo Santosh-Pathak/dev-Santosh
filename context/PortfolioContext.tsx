@@ -1,9 +1,9 @@
 "use client";
 
 import React, { createContext, useContext, useState, useCallback } from "react";
-import { sectionFiles, getFileById } from "@/lib/files";
+import { getFileById } from "@/lib/files";
 
-const INITIAL_OPEN_TABS = sectionFiles.map((f) => f.id);
+const INITIAL_OPEN_TABS = ["home"];
 const INITIAL_ACTIVE = "home";
 
 interface PortfolioContextValue {
