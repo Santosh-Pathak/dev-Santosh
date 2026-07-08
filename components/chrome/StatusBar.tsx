@@ -6,6 +6,20 @@ import { getFileById } from "@/lib/files";
 import { usePortfolio } from "@/context/PortfolioContext";
 import { useClock } from "@/hooks/useClock";
 import { useTheme, THEMES, type ThemeId } from "@/context/ThemeContext";
+import { useAmbientSound } from "@/hooks/useAmbientSound";
+import { availability } from "@/data/portfolio";
+
+const AVAILABILITY_CONFIG = {
+  open:        { color: "#a6e3a1", pulse: "bg-[#a6e3a1]", label: "Open to Work"         },
+  passive:     { color: "#f9e2af", pulse: "bg-[#f9e2af]", label: "Passively Looking"    },
+  unavailable: { color: "#f38ba8", pulse: "bg-[#f38ba8]", label: "Not Available"        },
+} as const;
+
+const AMBIENT_CONFIG = {
+  off:  { icon: "🔇", label: "Sounds off"  },
+  rain: { icon: "🌧", label: "Rain sounds" },
+  cafe: { icon: "☕", label: "Café sounds" },
+} as const;
 
 interface StatusBarProps {
   onOpenCopilot: () => void;
@@ -16,6 +30,10 @@ export function StatusBar({ onOpenCopilot }: StatusBarProps) {
   const clock = useClock();
   const file = getFileById(activeFileId);
   const { themeId, setThemeId } = useTheme();
+  const { mode: ambientMode, cycle: cycleAmbient } = useAmbientSound();
+
+  const avail     = AVAILABILITY_CONFIG[availability.status];
+  const ambientCfg = AMBIENT_CONFIG[ambientMode];
 
   const [pickerOpen, setPickerOpen] = useState(false);
   const pickerRef  = useRef<HTMLDivElement>(null);
@@ -57,8 +75,19 @@ export function StatusBar({ onOpenCopilot }: StatusBarProps) {
           <GitBranch size={11} />
           <span>main</span>
         </span>
-        <span className="hidden sm:block hover:bg-white/20 px-1 rounded">
-          Santosh&apos;s Portfolio
+
+        {/* ── Availability dot ──────────────────── */}
+        <span
+          className="hidden sm:flex items-center gap-1.5 hover:bg-white/20 px-1.5 rounded cursor-default"
+          title={avail.label}
+        >
+          <span className="relative flex h-2 w-2">
+            <span
+              className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${avail.pulse}`}
+            />
+            <span className={`relative inline-flex rounded-full h-2 w-2 ${avail.pulse}`} />
+          </span>
+          <span>{avail.label}</span>
         </span>
       </div>
 
@@ -171,6 +200,20 @@ export function StatusBar({ onOpenCopilot }: StatusBarProps) {
             </div>
           )}
         </div>
+
+        {/* ── Ambient sound toggle ──────────────── */}
+        <button
+          onClick={cycleAmbient}
+          title={`${ambientCfg.label} — click to cycle`}
+          className={`flex items-center gap-1 px-1 rounded transition-colors ${
+            ambientMode !== "off" ? "bg-white/20" : "hover:bg-white/20"
+          }`}
+        >
+          <span className="text-[11px] leading-none">{ambientCfg.icon}</span>
+          {ambientMode !== "off" && (
+            <span className="hidden md:inline">{ambientCfg.label}</span>
+          )}
+        </button>
 
         <span className="hover:bg-white/20 px-1 rounded">{clock}</span>
       </div>

@@ -58,6 +58,8 @@ function EmptyEditor({ onOpen }: { onOpen: () => void }) {
   );
 }
 
+const LINE_H = 24; // matches leading-6 (1.5rem = 24px)
+
 function PortfolioApp() {
   const {
     openCopilot, copilotOpen, toggleSidebar,
@@ -65,7 +67,19 @@ function PortfolioApp() {
     terminalOpen, toggleTerminal,
   } = usePortfolio();
 
-  const editorRef = useRef<HTMLDivElement>(null);
+  const editorRef   = useRef<HTMLDivElement>(null);
+  const contentRef  = useRef<HTMLDivElement>(null);
+  const [lineCount, setLineCount] = React.useState(40);
+
+  React.useEffect(() => {
+    const el = contentRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver(([entry]) => {
+      setLineCount(Math.ceil(entry.contentRect.height / LINE_H) + 2);
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [activeFileId]);
 
   const { isOpen, open, close, query, setQuery, selectedIndex, setSelectedIndex } =
     useCommandPalette(openCopilot);
@@ -111,10 +125,32 @@ function PortfolioApp() {
             <div
               ref={editorRef}
               key={activeFileId}
-              className="flex-1 overflow-y-auto thin-scrollbar pb-6 min-h-0 animate-tab-enter relative"
+              className="flex-1 overflow-y-auto thin-scrollbar pb-6 min-h-0 animate-tab-enter relative flex"
             >
-              <ActiveLineHighlight containerRef={editorRef} />
-              <ActiveSection fileId={activeFileId} />
+              {/* VS Code-style line-number gutter — count matches content height */}
+              <div
+                className="hidden md:flex flex-col items-end pt-[4.5rem] px-3 flex-shrink-0 select-none pointer-events-none"
+                style={{
+                  width: "3.25rem",
+                  borderRight: "1px solid var(--color-border)",
+                  minHeight: "100%",
+                }}
+              >
+                {Array.from({ length: lineCount }, (_, i) => (
+                  <span
+                    key={i}
+                    className="font-mono text-[11px] text-vscode-text-muted/30 leading-6"
+                  >
+                    {i + 1}
+                  </span>
+                ))}
+              </div>
+
+              {/* Section content */}
+              <div ref={contentRef} className="flex-1 min-w-0">
+                <ActiveLineHighlight containerRef={editorRef} />
+                <ActiveSection fileId={activeFileId} />
+              </div>
             </div>
           ) : (
             <EmptyEditor onOpen={open} />

@@ -3,7 +3,7 @@ import { readme } from "@/data/portfolio";
 
 export function ReadmeSection() {
   return (
-    <section className="px-8 py-12 md:px-12 lg:px-16 pb-24 max-w-4xl">
+    <section className="px-6 py-12 md:px-10 lg:px-14 pb-24 max-w-4xl">
 
       {/* ── Name + subline ──────────────────────────────────── */}
       <h2 className="font-display font-black text-5xl md:text-6xl text-white mb-2">
@@ -78,3 +78,4 @@ export function ReadmeSection() {
     </section>
   );
 }
+

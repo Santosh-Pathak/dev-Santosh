@@ -80,7 +80,7 @@ export function HomeSection() {
   const typed = useTypewriter(hero.typewriterLines);
 
   return (
-    <section className="min-h-full flex flex-col justify-center px-8 py-12 md:px-12 lg:px-16">
+    <section className="min-h-full flex flex-col justify-center px-6 py-12 md:px-10 lg:px-14">
       {/* Comment */}
       <p className="font-mono text-sm italic mb-6" style={{ color: "#98c379" }}>
         {hero.comment}
@@ -185,3 +185,4 @@ export function HomeSection() {
     </section>
   );
 }
+

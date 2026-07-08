@@ -121,7 +121,7 @@ export function BlogsSection() {
   useEffect(() => { fetchPosts(); }, []);
 
   return (
-    <section className="px-8 py-16 md:px-12 lg:px-16">
+    <section className="px-6 py-14 md:px-10 lg:px-14">
       {/* Comment */}
       <p className="font-mono text-sm italic mb-6" style={{ color: "#98c379" }}>
         {"// blogs.md : writing on the web"}
@@ -210,3 +210,4 @@ export function BlogsSection() {
     </section>
   );
 }
+
