@@ -1,0 +1,246 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Theme: Santosh Dark (default) ────────────────────── */
+:root,
+[data-theme="santosh-dark"] {
+  --color-bg:           #1e1e2e;
+  --color-sidebar:      #181825;
+  --color-titlebar:     #11111b;
+  --color-statusbar:    #007acc;
+  --color-border:       #313244;
+  --color-text-primary: #cdd6f4;
+  --color-text-muted:   #6c7086;
+  --color-pink:         #ff5fbf;
+  --color-blue:         #61afef;
+  --color-cyan:         #56d4dd;
+  --color-purple:       #c586c0;
+  --color-green:        #98c379;
+  --color-orange:       #e5a663;
+  --color-yellow:       #f1c76f;
+  --color-red:          #f38ba8;
+  --color-bright:       #ffffff;
+  color-scheme: dark;
+}
+
+/* ─── Theme: Rosé Pine ──────────────────────────────────── */
+[data-theme="rose-pine"] {
+  --color-bg:           #191724;
+  --color-sidebar:      #1f1d2e;
+  --color-titlebar:     #26233a;
+  --color-statusbar:    #9893a5;
+  --color-border:       #403d52;
+  --color-text-primary: #e0def4;
+  --color-text-muted:   #6e6a86;
+  --color-pink:         #eb6f92;
+  --color-blue:         #31748f;
+  --color-cyan:         #9ccfd8;
+  --color-purple:       #c4a7e7;
+  --color-green:        #56949f;
+  --color-orange:       #f6c177;
+  --color-yellow:       #f6c177;
+  --color-red:          #eb6f92;
+  --color-bright:       #e0def4;
+  color-scheme: dark;
+}
+
+/* ─── Theme: Tokyo Night ────────────────────────────────── */
+[data-theme="tokyo-night"] {
+  --color-bg:           #1a1b26;
+  --color-sidebar:      #16161e;
+  --color-titlebar:     #13131a;
+  --color-statusbar:    #7aa2f7;
+  --color-border:       #292e42;
+  --color-text-primary: #a9b1d6;
+  --color-text-muted:   #565f89;
+  --color-pink:         #f7768e;
+  --color-blue:         #7aa2f7;
+  --color-cyan:         #7dcfff;
+  --color-purple:       #9d7cd8;
+  --color-green:        #9ece6a;
+  --color-orange:       #ff9e64;
+  --color-yellow:       #e0af68;
+  --color-red:          #f7768e;
+  --color-bright:       #c0caf5;
+  color-scheme: dark;
+}
+
+/* ─── Theme: Catppuccin Macchiato ───────────────────────── */
+[data-theme="catppuccin"] {
+  --color-bg:           #24273a;
+  --color-sidebar:      #1e2030;
+  --color-titlebar:     #181926;
+  --color-statusbar:    #8aadf4;
+  --color-border:       #363a4f;
+  --color-text-primary: #cad3f5;
+  --color-text-muted:   #6e738d;
+  --color-pink:         #f5bde6;
+  --color-blue:         #8aadf4;
+  --color-cyan:         #91d7e3;
+  --color-purple:       #c6a0f6;
+  --color-green:        #a6da95;
+  --color-orange:       #f5a97f;
+  --color-yellow:       #eed49f;
+  --color-red:          #ed8796;
+  --color-bright:       #cad3f5;
+  color-scheme: dark;
+}
+
+/* ─── Theme: Nord ───────────────────────────────────────── */
+[data-theme="nord"] {
+  --color-bg:           #2e3440;
+  --color-sidebar:      #3b4252;
+  --color-titlebar:     #2e3440;
+  --color-statusbar:    #5e81ac;
+  --color-border:       #4c566a;
+  --color-text-primary: #d8dee9;
+  --color-text-muted:   #616e88;
+  --color-pink:         #b48ead;
+  --color-blue:         #5e81ac;
+  --color-cyan:         #88c0d0;
+  --color-purple:       #b48ead;
+  --color-green:        #a3be8c;
+  --color-orange:       #d08770;
+  --color-yellow:       #ebcb8b;
+  --color-red:          #bf616a;
+  --color-bright:       #eceff4;
+  color-scheme: dark;
+}
+
+/* ─── Theme: Gruvbox ────────────────────────────────────── */
+[data-theme="gruvbox"] {
+  --color-bg:           #282828;
+  --color-sidebar:      #1d2021;
+  --color-titlebar:     #1d2021;
+  --color-statusbar:    #458588;
+  --color-border:       #504945;
+  --color-text-primary: #ebdbb2;
+  --color-text-muted:   #928374;
+  --color-pink:         #d3869b;
+  --color-blue:         #83a598;
+  --color-cyan:         #8ec07c;
+  --color-purple:       #d3869b;
+  --color-green:        #b8bb26;
+  --color-orange:       #fe8019;
+  --color-yellow:       #fabd2f;
+  --color-red:          #fb4934;
+  --color-bright:       #fbf1c7;
+  color-scheme: dark;
+}
+
+/* Guaranteed body / html background from CSS variable (independent of Tailwind) */
+html, body {
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: var(--font-outfit), sans-serif;
+  word-spacing: 0.06em;
+  letter-spacing: 0.01em;
+}
+
+/* All headings use Syne — consistent display font everywhere */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-syne), sans-serif;
+  word-spacing: 0.04em;
+  letter-spacing: -0.01em; /* tighter for large display text */
+}
+
+/* All body-level elements inherit Outfit */
+p, span, div, li, a, button, label,
+input, textarea, select {
+  font-family: inherit;
+}
+
+/* Mono / code zones — keep JetBrains Mono and reset spacing */
+pre, code, kbd, samp,
+.font-mono,
+[class*="font-mono"] {
+  font-family: var(--font-jetbrains-mono), monospace;
+  word-spacing: normal;
+  letter-spacing: normal;
+}
+
+/* Smooth theme transition on key surfaces */
+html, body,
+.bg-vscode-bg, .bg-vscode-sidebar, .bg-vscode-titlebar, .bg-vscode-statusbar,
+.bg-vscode-border, [class*="bg-vscode-"],
+[class*="text-vscode-"], [class*="border-vscode-"] {
+  transition:
+    background-color 0.25s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+/* Hide default OS cursor — custom cursor takes over */
+*, *::before, *::after {
+  cursor: none !important;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-titlebar);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+/* Each section fills at least the visible editor area */
+section {
+  min-height: 100%;
+}
+
+/* Thin scrollbar for sidebar and tab bar */
+.thin-scrollbar::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+.thin-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 2px;
+}
+
+/* Progress bar animation */
+@keyframes growWidth {
+  from { width: 0%; }
+  to { width: var(--target-width); }
+}
+
+.skill-bar-fill {
+  animation: growWidth 1s ease-out forwards;
+}
+
+/* Tab active top border utility */
+.tab-active-border {
+  border-top: 2px solid;
+}
+
+/* Typewriter blinking cursor */
+@keyframes blink-cursor {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+.typewriter-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  background-color: var(--color-pink);
+  animation: blink-cursor 1s step-end infinite;
+}
