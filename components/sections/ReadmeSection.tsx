@@ -1,24 +1,9 @@
 import React from "react";
-import Image from "next/image";
 import { readme } from "@/data/portfolio";
 
 export function ReadmeSection() {
   return (
     <section className="px-8 py-12 md:px-12 lg:px-16 pb-24 max-w-4xl">
-
-      {/* ── Cover image ─────────────────────────────────────── */}
-      <div className="relative w-full rounded-lg overflow-hidden border border-vscode-border mb-8 shadow-2xl">
-        <Image
-          src="/image.png"
-          alt="Santosh Pathak Portfolio Preview"
-          width={1024}
-          height={512}
-          className="w-full h-auto object-cover"
-          priority
-        />
-        {/* Subtle bottom-fade overlay so the content below blends in */}
-        <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-vscode-bg to-transparent" />
-      </div>
 
       {/* ── Name + subline ──────────────────────────────────── */}
       <h2 className="font-display font-black text-5xl md:text-6xl text-white mb-2">

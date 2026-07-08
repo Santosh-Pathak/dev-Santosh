@@ -1,5 +1,7 @@
 # Santosh Pathak — Portfolio
 
+![Portfolio Preview](public/image.png)
+
 VS Code-themed single-page portfolio styled as a "Santosh Dark" editor window.
 
 ## Tech Stack
