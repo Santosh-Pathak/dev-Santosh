@@ -194,9 +194,10 @@ export function Sidebar({ onOpenCopilot, copilotOpen }: SidebarProps) {
     if (id === "resume") {
       // Trigger resume download directly
       const a = document.createElement("a");
-      a.href = "/Santosh_Pathak_Resume.pdf";
-      a.download = "Santosh_Pathak_Resume.pdf";
-      a.click();
+      window.open(
+        "https://drive.google.com/file/d/1lnHV6Ha3fpR1sQ45y8JJ9iXXKd427dZv/view?usp=sharing",
+        "_blank",
+      );
       return;
     }
     setActivePanel((prev) => {

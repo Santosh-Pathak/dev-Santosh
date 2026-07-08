@@ -1,8 +1,9 @@
 "use client";
 
-import React from "react";
-import { Search, Menu } from "lucide-react";
+import React, { useCallback } from "react";
+import { Search, Menu, Minus, Maximize2 } from "lucide-react";
 import { MenuBar } from "./MenuBar";
+import { RunawayButton } from "@/components/ui/RunawayButton";
 
 interface TitleBarProps {
   onOpenPalette: () => void;
@@ -11,6 +12,15 @@ interface TitleBarProps {
 }
 
 export function TitleBar({ onOpenPalette, onToggleSidebar, onOpenCopilot }: TitleBarProps) {
+  /** Green button — toggle fullscreen */
+  const handleFullscreen = useCallback(() => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(() => {});
+    } else {
+      document.exitFullscreen().catch(() => {});
+    }
+  }, []);
+
   return (
     <div
       className="bg-vscode-titlebar border-b border-vscode-border select-none"
@@ -18,11 +28,33 @@ export function TitleBar({ onOpenPalette, onToggleSidebar, onOpenCopilot }: Titl
     >
       {/* Main title bar row */}
       <div className="flex items-center h-9 px-3 gap-3">
+
         {/* Traffic lights (desktop) */}
         <div className="hidden md:flex items-center gap-1.5">
-          <div className="w-3 h-3 rounded-full bg-[#ff5f57]" />
-          <div className="w-3 h-3 rounded-full bg-[#febc2e]" />
-          <div className="w-3 h-3 rounded-full bg-[#28c840]" />
+
+          {/* 1 — Red: runs away from cursor */}
+          <RunawayButton />
+
+          {/* 2 — Yellow: does absolutely nothing */}
+          <button
+            disabled
+            title="Minimize (does nothing)"
+            className="w-3 h-3 rounded-full bg-[#febc2e] flex items-center justify-center group cursor-not-allowed"
+            aria-label="Minimize"
+          >
+            <Minus size={7} strokeWidth={3} className="text-[#7a5c00] opacity-0 group-hover:opacity-100 transition-opacity" />
+          </button>
+
+          {/* 3 — Green: fullscreen */}
+          <button
+            onClick={handleFullscreen}
+            title="Toggle fullscreen"
+            className="w-3 h-3 rounded-full bg-[#28c840] flex items-center justify-center group hover:brightness-110 transition-all active:scale-90"
+            aria-label="Toggle fullscreen"
+          >
+            <Maximize2 size={7} strokeWidth={3} className="text-[#0a4a14] opacity-0 group-hover:opacity-100 transition-opacity" />
+          </button>
+
         </div>
 
         {/* Mobile hamburger */}

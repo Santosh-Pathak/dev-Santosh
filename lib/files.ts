@@ -92,7 +92,7 @@ export const portfolioFiles: PortfolioFile[] = [
     breadcrumbPath: "",
     languageLabel: "PDF",
     sectionId: "",
-    externalHref: "/Santosh_Pathak_Resume.pdf",
+    externalHref: "https://drive.google.com/file/d/1lnHV6Ha3fpR1sQ45y8JJ9iXXKd427dZv/view?usp=sharing",
   },
 ];
 

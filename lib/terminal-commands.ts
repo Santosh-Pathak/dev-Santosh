@@ -538,7 +538,7 @@ function cmdCurl(args: string[]): CommandLine {
         { text: "  % Total    % Received  Xferd  Average Speed", color: "muted" },
         { text: "100  245k  100  245k    0     0  1200k      0", color: "muted" },
         { text: "" },
-        { text: "Resume available at: /Santosh_Pathak_Resume.pdf", color: "green" },
+        { text: "Resume: https://drive.google.com/file/d/1lnHV6Ha3fpR1sQ45y8JJ9iXXKd427dZv/view", color: "green" },
         { text: "Tip: run  open README.md  to learn more about Santosh.", color: "cyan" },
       ],
     };

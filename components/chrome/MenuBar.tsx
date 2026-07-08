@@ -46,10 +46,10 @@ function buildMenus(
           shortcut: "",
           icon: "📥",
           action: () => {
-            const a = document.createElement("a");
-            a.href     = "/Santosh_Pathak_Resume.pdf";
-            a.download = "Santosh_Pathak_Resume.pdf";
-            a.click();
+            window.open(
+              "https://drive.google.com/file/d/1lnHV6Ha3fpR1sQ45y8JJ9iXXKd427dZv/view?usp=sharing",
+              "_blank",
+            );
           },
         },
         { type: "separator" },
