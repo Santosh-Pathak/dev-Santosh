@@ -22,6 +22,7 @@ import { SkillsSection } from "@/components/sections/SkillsSection";
 import { ExperienceSection } from "@/components/sections/ExperienceSection";
 import { ContactSection } from "@/components/sections/ContactSection";
 import { ReadmeSection } from "@/components/sections/ReadmeSection";
+import { BlogsSection } from "@/components/sections/BlogsSection";
 
 /** Renders the section that corresponds to the currently active tab */
 function ActiveSection({ fileId }: { fileId: string }) {
@@ -33,6 +34,7 @@ function ActiveSection({ fileId }: { fileId: string }) {
     case "experience": return <ExperienceSection />;
     case "contact":    return <ContactSection />;
     case "readme":     return <ReadmeSection />;
+    case "blogs":      return <BlogsSection />;
     default:           return null;
   }
 }

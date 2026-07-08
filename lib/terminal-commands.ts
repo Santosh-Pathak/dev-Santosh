@@ -22,7 +22,7 @@ export interface CommandResult {
 // ─── Virtual filesystem ───────────────────────────────────────────────────────
 const DIRS: Record<string, string[]> = {
   "~": [
-    "home.tsx", "about.html", "projects.js", "skills.json",
+    "home.tsx", "about.html", "projects.js", "skills.json", "blogs.md",
     "experience.ts", "contact.css", "README.md",
     "src/", "public/", "package.json", ".gitignore", ".eslintrc.json",
   ],
@@ -492,7 +492,7 @@ function cmdOpen(args: string[], navigateToFile?: (id: string) => void): Command
     return {
       lines: [
         { text: `open: ${args[0]}: no editor mapping`, color: "red" },
-        { text: "Openable files: home.tsx, about.html, projects.js, skills.json,", color: "muted" },
+        { text: "Openable files: home.tsx, about.html, projects.js, skills.json, blogs.md,", color: "muted" },
         { text: "                experience.ts, contact.css, README.md", color: "muted" },
       ],
     };

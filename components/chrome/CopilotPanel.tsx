@@ -1,10 +1,70 @@
 "use client";
 
 import React, { useState } from "react";
-import { X, Pencil, Send, Sparkles } from "lucide-react";
+import { X, Pencil, Send, Sparkles, ChevronRight } from "lucide-react";
 import { copilotChips, CopilotChip } from "@/lib/copilot-responses";
 import { usePortfolio } from "@/context/PortfolioContext";
 import { useResizable } from "@/hooks/useResizable";
+
+/** Render a single inline segment: **bold** → accent span, rest → plain text */
+function InlineMd({ text }: { text: string }) {
+  const parts = text.split(/\*\*(.*?)\*\*/g);
+  return (
+    <>
+      {parts.map((part, i) =>
+        i % 2 === 1 ? (
+          <span key={i} className="text-vscode-cyan font-semibold">
+            {part}
+          </span>
+        ) : (
+          <React.Fragment key={i}>{part}</React.Fragment>
+        )
+      )}
+    </>
+  );
+}
+
+/** Full markdown-like renderer for assistant messages */
+function CopilotMarkdown({ content }: { content: string }) {
+  const lines = content.split("\n");
+  const nodes: React.ReactNode[] = [];
+  let key = 0;
+
+  for (const raw of lines) {
+    const line = raw.trim();
+
+    if (line === "") {
+      nodes.push(<div key={key++} className="h-2" />);
+      continue;
+    }
+
+    // Bullet: lines starting with • or "- " or "* " (but not bold)
+    const bulletMatch = line.match(/^[•\-]\s+(.+)$/) ?? line.match(/^\*\s+(.+)$/);
+    if (bulletMatch) {
+      nodes.push(
+        <div key={key++} className="flex items-start gap-1.5 my-0.5">
+          <ChevronRight
+            size={11}
+            className="text-vscode-pink mt-[3px] flex-shrink-0"
+          />
+          <span className="leading-relaxed">
+            <InlineMd text={bulletMatch[1]} />
+          </span>
+        </div>
+      );
+      continue;
+    }
+
+    // Emoji lines that act as section headers (e.g. "📧 **Email:**...")
+    nodes.push(
+      <p key={key++} className="leading-relaxed my-0.5">
+        <InlineMd text={line} />
+      </p>
+    );
+  }
+
+  return <div className="font-mono text-[12px] text-vscode-text-primary">{nodes}</div>;
+}
 
 interface ChatMessage {
   role: "user" | "assistant";
@@ -140,10 +200,8 @@ export function CopilotPanel() {
                   <p className="font-mono text-sm text-vscode-text-primary">{msg.content}</p>
                 </div>
               ) : (
-                <div className="bg-vscode-border/40 rounded-lg px-3 py-2 max-w-[95%]">
-                  <p className="font-mono text-[12px] text-vscode-text-primary whitespace-pre-line leading-relaxed">
-                    {msg.content}
-                  </p>
+                <div className="bg-vscode-border/40 rounded-lg px-3 py-2.5 max-w-[95%]">
+                  <CopilotMarkdown content={msg.content} />
                 </div>
               )}
             </div>

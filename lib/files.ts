@@ -1,4 +1,4 @@
-export type FileIconType = "react" | "html" | "js" | "json" | "ts" | "css" | "md" | "pdf";
+export type FileIconType = "react" | "html" | "js" | "json" | "ts" | "css" | "md" | "pdf" | "blog";
 
 export type PortfolioFile = {
   id: string;
@@ -82,6 +82,16 @@ export const portfolioFiles: PortfolioFile[] = [
     breadcrumbPath: "",
     languageLabel: "Markdown",
     sectionId: "readme",
+  },
+  {
+    id: "blogs",
+    filename: "blogs.md",
+    icon: "blog",
+    accentColor: "#cdd6f4",
+    tailwindAccent: "vscode-bright",
+    breadcrumbPath: "src",
+    languageLabel: "Markdown",
+    sectionId: "blogs",
   },
   {
     id: "resume",
