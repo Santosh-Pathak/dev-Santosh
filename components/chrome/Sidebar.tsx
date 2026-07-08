@@ -192,8 +192,6 @@ export function Sidebar({ onOpenCopilot, copilotOpen }: SidebarProps) {
 
   const handleIconClick = (id: PanelId | "resume") => {
     if (id === "resume") {
-      // Trigger resume download directly
-      const a = document.createElement("a");
       window.open(
         "https://drive.google.com/file/d/1lnHV6Ha3fpR1sQ45y8JJ9iXXKd427dZv/view?usp=sharing",
         "_blank",
