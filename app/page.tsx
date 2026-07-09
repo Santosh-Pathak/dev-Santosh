@@ -13,6 +13,7 @@ import { StatusBar } from "@/components/chrome/StatusBar";
 import { CommandPalette } from "@/components/chrome/CommandPalette";
 import { CopilotPanel } from "@/components/chrome/CopilotPanel";
 import { ActiveLineHighlight } from "@/components/ui/ActiveLineHighlight";
+import { FindBar }             from "@/components/ui/FindBar";
 
 import { Terminal } from "@/components/chrome/Terminal";
 import { HomeSection } from "@/components/sections/HomeSection";
@@ -69,7 +70,8 @@ function PortfolioApp() {
 
   const editorRef   = useRef<HTMLDivElement>(null);
   const contentRef  = useRef<HTMLDivElement>(null);
-  const [lineCount, setLineCount] = React.useState(40);
+  const [lineCount,  setLineCount]  = React.useState(40);
+  const [findOpen,   setFindOpen]   = React.useState(false);
 
   React.useEffect(() => {
     const el = contentRef.current;
@@ -84,13 +86,12 @@ function PortfolioApp() {
   const { isOpen, open, close, query, setQuery, selectedIndex, setSelectedIndex } =
     useCommandPalette(openCopilot);
 
-  // Ctrl+` toggles terminal
+  // Keyboard shortcuts
   React.useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      if (e.key === "`" && e.ctrlKey) {
-        e.preventDefault();
-        toggleTerminal();
-      }
+      if (e.key === "`" && e.ctrlKey) { e.preventDefault(); toggleTerminal(); }
+      if (e.key === "f"  && e.ctrlKey) { e.preventDefault(); setFindOpen(true); }
+      if (e.key === "Escape")          { setFindOpen(false); }
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
@@ -118,10 +119,18 @@ function PortfolioApp() {
           {hasOpenTabs && <Breadcrumb />}
 
           {hasOpenTabs ? (
-            /*
+            <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
+            {/* Find bar */}
+            {findOpen && (
+              <FindBar
+                containerRef={contentRef}
+                onClose={() => setFindOpen(false)}
+              />
+            )}
+            {/*
              * key={activeFileId} triggers animate-tab-enter + resets scroll
              * every time the user switches to a different file tab.
-             */
+             */}
             <div
               ref={editorRef}
               key={activeFileId}
@@ -151,6 +160,8 @@ function PortfolioApp() {
                 <ActiveLineHighlight containerRef={editorRef} />
                 <ActiveSection fileId={activeFileId} />
               </div>
+
+            </div>
             </div>
           ) : (
             <EmptyEditor onOpen={open} />

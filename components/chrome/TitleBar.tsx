@@ -84,6 +84,9 @@ export function TitleBar({ onOpenPalette, onToggleSidebar, onOpenCopilot }: Titl
         <div className="hidden md:block w-16" />
       </div>
 
+      {/* Accent divider — matches project card border */}
+      <div className="h-px w-full bg-vscode-border" />
+
       {/* Menu bar row — real dropdowns */}
       <MenuBar onOpenPalette={onOpenPalette} onOpenCopilot={onOpenCopilot} />
     </div>
