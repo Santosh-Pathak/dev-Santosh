@@ -24,8 +24,8 @@ export const hero = {
   paragraph:
     "I live at the crossroads of **full-stack engineering**, **cloud infrastructure**, and **system design**. I build systems that are genuinely **scalable and production-ready**.",
   stats: [
-    { value: "1+",   label: "YEARS EXP"       },
-    { value: "6+",   label: "PROJECTS"         },
+    { value: "1.5+",   label: "YEARS EXP"       },
+    { value: "20+",   label: "PROJECTS"         },
     { value: "1800", label: "MAX LC RATING"    },
     { value: "↑",    label: "ALWAYS LEARNING"  },
   ],
@@ -373,4 +373,14 @@ export const readme = {
     { icon: "🏗️", label: "Terraform"       },
     { icon: "⚙️", label: "GitHub Actions"  },
   ],
+};
+
+// ─── Availability ─────────────────────────────────────────────
+// Change `status` to control the pulsing dot in the status bar.
+// "open"        → green  — actively looking for new roles
+// "passive"     → yellow — open to great opportunities
+// "unavailable" → red    — not looking right now
+export const availability = {
+  status: "open" as "open" | "passive" | "unavailable",
+  label:  "Open to Work",
 };

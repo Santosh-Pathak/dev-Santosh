@@ -4,7 +4,7 @@ import { parseBold } from "@/lib/parseBold";
 
 export function AboutSection() {
   return (
-    <section className="min-h-full px-8 py-16 md:px-12 lg:px-16">
+    <section className="min-h-full px-6 py-14 md:px-10 lg:px-14">
       {/* HTML-style comment with arrows */}
       <p className="font-mono text-sm italic mb-6 flex items-center gap-2 text-vscode-cyan">
         <span>←</span>
@@ -73,3 +73,4 @@ export function AboutSection() {
     </section>
   );
 }
+
