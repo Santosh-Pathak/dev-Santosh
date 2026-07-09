@@ -7,9 +7,10 @@ import React, {
   useCallback,
   KeyboardEvent,
 } from "react";
-import { X, Plus, ChevronDown, Trash2 } from "lucide-react";
+import { X, Plus, ChevronDown, Trash2, AlertCircle, AlertTriangle, Info } from "lucide-react";
 import { executeCommand, OutputLine, LineColor } from "@/lib/terminal-commands";
 import { usePortfolio } from "@/context/PortfolioContext";
+import { problems, errorCount, warningCount, infoCount, type Problem } from "@/lib/problems";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface HistoryEntry {
@@ -48,10 +49,46 @@ function Prompt({ cwd }: { cwd: string }) {
   );
 }
 
+// ─── Severity config ──────────────────────────────────────────────────────────
+const SEV = {
+  error:   { icon: AlertCircle,   color: "text-vscode-red",    label: "error"   },
+  warning: { icon: AlertTriangle, color: "text-vscode-yellow", label: "warning" },
+  info:    { icon: Info,          color: "text-vscode-blue",   label: "info"    },
+} as const;
+
+// ─── Problems panel ───────────────────────────────────────────────────────────
+function ProblemsPanel() {
+  return (
+    <div className="flex-1 overflow-y-auto thin-scrollbar text-[12px] font-mono">
+      {problems.map((p: Problem, i) => {
+        const { icon: Icon, color } = SEV[p.severity];
+        return (
+          <div
+            key={i}
+            className="flex items-start gap-2 px-3 py-1.5 hover:bg-white/[0.04] border-b border-vscode-border/30 group cursor-default"
+          >
+            <Icon size={13} className={`${color} flex-shrink-0 mt-0.5`} />
+            <div className="flex-1 min-w-0">
+              <span className="text-vscode-text-primary">{p.message}</span>
+              <span className="text-vscode-text-muted ml-2 text-[11px]">
+                {p.file}:{p.line}:{p.col}
+              </span>
+            </div>
+            <span className="text-vscode-text-muted text-[10px] flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
+              {p.source}
+            </span>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 // ─── Terminal component ───────────────────────────────────────────────────────
 export function Terminal() {
   const { closeTerminal, navigateToFile } = usePortfolio();
 
+  const [activeTab, setActiveTab] = useState<"terminal" | "problems">("terminal");
   const [cwd, setCwd] = useState("~");
   const [input, setInput] = useState("");
   const [entries, setEntries] = useState<HistoryEntry[]>([
@@ -217,25 +254,46 @@ export function Terminal() {
 
       {/* ── Header ───────────────────────────────────────────────────────── */}
       <div className="flex items-center justify-between h-8 px-3 border-b border-vscode-border bg-vscode-sidebar shrink-0">
-        {/* Left: panel label + tab */}
-        <div className="flex items-center gap-3">
-          <span className="text-[10px] font-semibold tracking-widest uppercase text-vscode-text-muted">
-            Terminal
-          </span>
-          <div className="flex items-center gap-1 bg-vscode-bg px-2 py-0.5 rounded-sm">
+        {/* Left: panel tabs */}
+        <div className="flex items-center h-full">
+          {/* Terminal tab */}
+          <button
+            onClick={(e) => { e.stopPropagation(); setActiveTab("terminal"); }}
+            className={`flex items-center gap-1.5 h-full px-3 text-[11px] font-mono border-b-2 transition-colors ${
+              activeTab === "terminal"
+                ? "border-vscode-blue text-vscode-text-primary"
+                : "border-transparent text-vscode-text-muted hover:text-vscode-text-primary"
+            }`}
+          >
             <span className="w-2 h-2 rounded-full bg-vscode-green inline-block" />
-            <span className="text-vscode-text-primary text-[11px]">bash</span>
+            bash
             <button
               onClick={(e) => { e.stopPropagation(); closeTerminal(); }}
-              className="ml-1 text-vscode-text-muted hover:text-vscode-red"
+              className="ml-0.5 text-vscode-text-muted hover:text-vscode-red"
             >
               <X size={10} />
             </button>
-          </div>
+          </button>
+
+          {/* Problems tab */}
+          <button
+            onClick={(e) => { e.stopPropagation(); setActiveTab("problems"); }}
+            className={`flex items-center gap-1.5 h-full px-3 text-[11px] font-mono border-b-2 transition-colors ${
+              activeTab === "problems"
+                ? "border-vscode-blue text-vscode-text-primary"
+                : "border-transparent text-vscode-text-muted hover:text-vscode-text-primary"
+            }`}
+          >
+            <AlertTriangle size={11} className="text-vscode-yellow" />
+            Problems
+            <span className="ml-0.5 text-[10px] text-vscode-red font-semibold">{errorCount}</span>
+            <span className="text-[10px] text-vscode-yellow font-semibold">{warningCount}</span>
+          </button>
+
           {/* New terminal (+) */}
           <button
             onClick={(e) => { e.stopPropagation(); }}
-            className="text-vscode-text-muted hover:text-vscode-text-primary"
+            className="ml-1 text-vscode-text-muted hover:text-vscode-text-primary"
             title="New Terminal"
           >
             <Plus size={13} />
@@ -244,28 +302,33 @@ export function Terminal() {
 
         {/* Right: actions */}
         <div className="flex items-center gap-2">
-          <button
-            onClick={(e) => { e.stopPropagation(); clearTerminal(); }}
-            className="text-vscode-text-muted hover:text-vscode-text-primary"
-            title="Clear Terminal (Ctrl+L)"
-          >
-            <Trash2 size={13} />
-          </button>
+          {activeTab === "terminal" && (
+            <button
+              onClick={(e) => { e.stopPropagation(); clearTerminal(); }}
+              className="text-vscode-text-muted hover:text-vscode-text-primary"
+              title="Clear Terminal (Ctrl+L)"
+            >
+              <Trash2 size={13} />
+            </button>
+          )}
           <button
             onClick={(e) => { e.stopPropagation(); closeTerminal(); }}
             className="text-vscode-text-muted hover:text-vscode-red"
-            title="Close Terminal"
+            title="Close Panel"
           >
             <ChevronDown size={14} />
           </button>
         </div>
       </div>
 
-      {/* ── Body ─────────────────────────────────────────────────────────── */}
+      {/* ── Problems panel ───────────────────────────────────────────────── */}
+      {activeTab === "problems" && <ProblemsPanel />}
+
+      {/* ── Terminal Body ─────────────────────────────────────────────────── */}
       <div
         ref={scrollRef}
         className="flex-1 overflow-y-auto thin-scrollbar px-3 pt-2 pb-1 leading-relaxed"
-        style={{ overscrollBehavior: "contain" }}
+        style={{ overscrollBehavior: "contain", display: activeTab === "terminal" ? undefined : "none" }}
       >
         {entries.map((entry) => (
           <div key={entry.id}>
