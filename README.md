@@ -34,3 +34,5 @@ Open [http://localhost:3000](http://localhost:3000).
 ## Customizing Content
 
 All editable content lives in [`data/portfolio.ts`](data/portfolio.ts). Update `projects[]`, `experience[]`, `skillCategories[]`, `contactLinks[]` etc. without touching any component.
+##
+Made with ♥️ by Santosh Pathak
