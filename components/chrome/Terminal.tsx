@@ -10,7 +10,7 @@ import React, {
 import { X, Plus, ChevronDown, Trash2, AlertCircle, AlertTriangle, Info } from "lucide-react";
 import { executeCommand, OutputLine, LineColor } from "@/lib/terminal-commands";
 import { usePortfolio } from "@/context/PortfolioContext";
-import { problems, errorCount, warningCount, infoCount, type Problem } from "@/lib/problems";
+import { problems, errorCount, warningCount, type Problem } from "@/lib/problems";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface HistoryEntry {
